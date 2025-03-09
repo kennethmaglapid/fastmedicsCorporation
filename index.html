@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏥 FastmedicsCorporation</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+            width: 400px;
+            backdrop-filter: blur(10px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: #27ae60;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #2ecc71;
+        }
+        input {
+            font-size: 20px;
+            text-align: center;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 1px solid #27ae60;
+            width: 80%;
+        }
+        .alert {
+            color: #ff4d4d;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .biomed-icon {
+            font-size: 50px;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        .denied {
+            background: #ff0000 !important;
+            color: white;
+            animation: blink 0.5s infinite alternate;
+            padding: 50px;
+            border-radius: 15px;
+            text-shadow: 2px 2px black;
+        }
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="biomed-icon">🩺💉</div>
+        <h1>FastmedicsCorporation</h1>
+        <p>Authorized Biomedical Engineer Personnel Only</p>
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="checkPassword()">Submit</button>
+        <p id="message" class="alert"></p>
+    </div>
+
+    <script>
+        let attempts = 0;
+        let alarm;
+
+        function checkPassword() {
+            let input = document.getElementById("password").value;
+            let container = document.getElementById("container");
+            let message = document.getElementById("message");
+            
+            if (input === "FCBiomed2025") {
+                window.location.href = "https://sites.google.com/view/fastmedics/home";
+            } else {
+                attempts++;
+                if (attempts === 2) {
+                    message.innerText = "⚠️ This system is for authorized Biomedical Engineer personnel only!";
+                } else if (attempts >= 3) {
+                    container.innerHTML = "<h1>🚨 SYSTEM DENIED 🚨</h1><p>THIS SYSTEM IS FOR AUTHORIZED BIOMEDICAL ENGINEER PERSONNEL ONLY!</p>";
+                    container.classList.add("denied");
+                    playAlarm();
+                    triggerVibration();
+                } else {
+                    message.innerText = "❌ Incorrect password! Try again.";
+                }
+            }
+        }
+
+        function playAlarm() {
+            if (alarm) {
+                alarm.pause();
+            }
+            alarm = new Audio('https://www.soundjay.com/button/beep-07.wav');
+            alarm.loop = true;
+            alarm.volume = 1.0; // Maximum volume
+            alarm.play().catch(error => console.error("Audio playback failed: ", error));
+        }
+
+        function triggerVibration() {
+            if (navigator.vibrate) {
+                navigator.vibrate([500, 500, 500, 500, 5000]); // Vibrate 5 times
+            }
+        }
+    </script>
+</body>
+</html>
